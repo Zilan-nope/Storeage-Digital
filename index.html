@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Storeage Digital Studio</title>
   
+  <!-- Favicon Logo -->
+  <link rel="icon" type="image/png" href="images/imagesweb_20logo.png">
+  
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Fraunces:wght@700;900&amp;display=swap" rel="stylesheet">
@@ -13,94 +16,127 @@
     .font-display { font-family: 'Fraunces', serif; }
   </style>
  </head>
- <body class="min-h-screen bg-white text-gray-900">
-  
-  <!-- Judul Utama -->
-  <div class="max-w-3xl mx-auto px-6 pt-12 pb-6">
-    <h1 class="font-display font-bold text-3xl tracking-tight uppercase">STOREAGE DIGITAL STUDIO</h1>
-  </div>
+ <body class="min-h-screen bg-gray-50 text-gray-900 overflow-x-hidden">
 
-  <!-- Menu Minimalis Sesuai Contoh -->
-  <div class="max-w-3xl mx-auto px-4 mb-8">
-    <nav class="bg-[#F2F2F2] px-6 py-8 rounded-lg">
-      <h2 class="font-semibold tracking-[0.15em] text-sm mb-5 text-gray-800 uppercase">Links</h2>
-      <div class="flex flex-col space-y-3.5 text-[15px] text-gray-700">
-        <a href="#" onclick="showTab('produk'); return false;" id="nav-produk" class="font-bold text-black hover:opacity-60 transition">Produk</a>
-        <a href="#" onclick="showTab('about'); return false;" id="nav-about" class="hover:opacity-60 transition">About Us</a>
+  <!-- Navbar Atas -->
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center">
+      <!-- Logo & Nama Toko -->
+      <div class="flex items-center gap-3">
+        <img src="images/imagesweb_20logo.png" alt="Logo" class="w-10 h-10 object-contain rounded bg-gray-100 p-1 border">
+        <h1 class="font-display font-bold text-xl tracking-tight uppercase">STOREAGE</h1>
+      </div>
+      
+      <!-- Tombol Hamburger (Menu) -->
+      <button onclick="toggleSidebar()" class="p-2 text-gray-800 hover:bg-gray-100 rounded-lg transition">
+        <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Sidebar Overlay (Latar Belakang Gelap saat Menu Terbuka) -->
+  <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar Menu (Slide dari Kanan) -->
+  <div id="sidebar" class="fixed top-0 right-0 h-full w-64 bg-[#F2F2F2] z-50 transform translate-x-full transition-transform duration-300 shadow-2xl">
+    <div class="p-6">
+      <!-- Header Sidebar -->
+      <div class="flex justify-between items-center mb-8 border-b border-gray-300 pb-4">
+        <h2 class="font-semibold tracking-[0.15em] text-sm text-gray-800 uppercase">Menu Links</h2>
+        <button onclick="toggleSidebar()" class="p-2 text-gray-500 hover:text-black hover:bg-gray-200 rounded-lg transition">
+          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </button>
+      </div>
+      
+      <!-- List Menu -->
+      <div class="flex flex-col space-y-4 text-[15px] text-gray-700">
+        <a href="#" onclick="showTab('produk'); toggleSidebar(); return false;" id="nav-produk" class="font-bold text-black hover:opacity-60 transition">Produk</a>
+        <a href="#" onclick="showTab('about'); toggleSidebar(); return false;" id="nav-about" class="hover:opacity-60 transition">About Us</a>
         <a href="#" class="hover:opacity-60 transition">How To Order</a>
         <a href="#" class="hover:opacity-60 transition">FAQ</a>
         <a href="#" class="hover:opacity-60 transition">Contact Us</a>
         <a href="#" class="hover:opacity-60 transition">Terms & Conditions</a>
       </div>
-    </nav>
+    </div>
   </div>
 
   <!-- Main Content -->
-  <main class="max-w-3xl mx-auto px-6 py-2">
-   <!-- Product Grid -->
-   <section id="section-produk">
-    <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">Katalog Produk</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-     
-     <!-- Produk 1 -->
-     <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(0)">
-      <img src="images/logo-design.jpg" class="w-full h-48 object-cover" loading="lazy">
-      <div class="p-4">
-       <h3 class="font-bold text-gray-900 text-lg">Logo Design</h3>
-       <p class="text-purple-600 font-bold mt-1">Rp 150.000</p>
-      </div>
+  <main class="max-w-3xl mx-auto bg-white min-h-screen pb-12 shadow-sm">
+    
+   <!-- Gambar Banner / Hero di Tengah -->
+   <div class="w-full relative h-48 sm:h-64 mb-8">
+     <img src="images/hero.jpg" class="w-full h-full object-cover" loading="lazy" alt="Banner Storeage">
+     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
+       <h2 class="font-display text-white text-2xl sm:text-3xl font-bold">DIGITAL STUDIO</h2>
      </div>
+   </div>
 
-     <!-- Produk 2 -->
-     <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(1)">
-      <img src="images/canva-template.jpg" class="w-full h-48 object-cover" loading="lazy">
-      <div class="p-4">
-       <h3 class="font-bold text-gray-900 text-lg">Canva Post Template</h3>
-       <p class="text-purple-600 font-bold mt-1">Rp 75.000</p>
+   <div class="px-6">
+     <!-- Product Grid -->
+     <section id="section-produk">
+      <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">Katalog Produk</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+       
+       <!-- Produk 1 -->
+       <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(0)">
+        <img src="images/logo-design.jpg" class="w-full h-48 object-cover" loading="lazy" alt="Logo Design">
+        <div class="p-4">
+         <h3 class="font-bold text-gray-900 text-lg">Logo Design</h3>
+         <p class="text-purple-600 font-bold mt-1">Rp 150.000</p>
+        </div>
+       </div>
+
+       <!-- Produk 2 -->
+       <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(1)">
+        <img src="images/canva-template.jpg" class="w-full h-48 object-cover" loading="lazy" alt="Canva Post Template">
+        <div class="p-4">
+         <h3 class="font-bold text-gray-900 text-lg">Canva Post Template</h3>
+         <p class="text-purple-600 font-bold mt-1">Rp 75.000</p>
+        </div>
+       </div>
+
+       <!-- Produk 3 -->
+       <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(2)">
+        <img src="images/ai-prompt.jpg" class="w-full h-48 object-cover" loading="lazy" alt="AI Prompt Pack">
+        <div class="p-4">
+         <h3 class="font-bold text-gray-900 text-lg">AI Prompt Pack</h3>
+         <p class="text-purple-600 font-bold mt-1">Rp 50.000</p>
+        </div>
+       </div>
+
+       <!-- Produk 4 -->
+       <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(3)">
+        <img src="images/cv-portfolio.jpg" class="w-full h-48 object-cover" loading="lazy" alt="CV & Portfolio">
+        <div class="p-4">
+         <h3 class="font-bold text-gray-900 text-lg">CV & Portfolio Template</h3>
+         <p class="text-purple-600 font-bold mt-1">Rp 100.000</p>
+        </div>
+       </div>
+
       </div>
-     </div>
+     </section>
 
-     <!-- Produk 3 -->
-     <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(2)">
-      <img src="images/ai-prompt.jpg" class="w-full h-48 object-cover" loading="lazy">
-      <div class="p-4">
-       <h3 class="font-bold text-gray-900 text-lg">AI Prompt Pack</h3>
-       <p class="text-purple-600 font-bold mt-1">Rp 50.000</p>
-      </div>
-     </div>
+     <!-- Product Detail View -->
+     <section id="section-detail" class="hidden">
+      <button onclick="hideDetail()" class="flex items-center gap-2 text-gray-500 font-bold mb-6 hover:text-black transition"> 
+       <i data-lucide="arrow-left" style="width:20px;height:20px"></i> Kembali 
+      </button>
+      <div id="detail-content"></div>
+     </section>
 
-     <!-- Produk 4 -->
-     <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(3)">
-      <img src="images/cv-portfolio.jpg" class="w-full h-48 object-cover" loading="lazy">
-      <div class="p-4">
-       <h3 class="font-bold text-gray-900 text-lg">CV & Portfolio Template</h3>
-       <p class="text-purple-600 font-bold mt-1">Rp 100.000</p>
-      </div>
-     </div>
-
-    </div>
-   </section>
-
-   <!-- Product Detail View -->
-   <section id="section-detail" class="hidden">
-    <button onclick="hideDetail()" class="flex items-center gap-2 text-gray-500 font-bold mb-6 hover:text-black transition"> 
-     <i data-lucide="arrow-left" style="width:20px;height:20px"></i> Kembali 
-    </button>
-    <div id="detail-content"></div>
-   </section>
-
-   <!-- About -->
-   <section id="section-about" class="hidden">
-    <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">About Us</h2>
-    <img src="images/about.jpg" class="w-full h-64 object-cover rounded-xl mb-6 shadow-sm" loading="lazy">
-    <p class="leading-relaxed text-gray-600 text-base">
-     Storeage Digital Studio adalah platform penyedia produk digital berkualitas tinggi. Kami menyediakan solusi desain kreatif seperti logo profesional, template Canva siap pakai, koleksi prompt AI pilihan, hingga template CV & Portfolio untuk meningkatkan branding dan mendukung karir profesional Anda.
-    </p>
-   </section>
+     <!-- About Section -->
+     <section id="section-about" class="hidden">
+      <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">About Us</h2>
+      <img src="images/about.jpg" class="w-full h-64 object-cover rounded-xl mb-6 shadow-sm" loading="lazy" alt="About Us">
+      <p class="leading-relaxed text-gray-600 text-base">
+       Storeage Digital Studio adalah platform penyedia produk digital berkualitas tinggi. Kami menyediakan solusi desain kreatif seperti logo profesional, template Canva siap pakai, koleksi prompt AI pilihan, hingga template CV & Portfolio untuk meningkatkan branding dan mendukung karir profesional Anda.
+      </p>
+     </section>
+   </div>
   </main>
 
   <!-- Footer -->
-  <footer class="border-t border-gray-100 py-10 bg-white mt-16">
+  <footer class="border-t border-gray-200 py-10 bg-white">
    <div class="max-w-3xl mx-auto px-6">
     <p class="text-center font-bold mb-6 text-gray-400 uppercase tracking-widest text-sm">Follow Us</p>
     <div class="flex justify-center gap-4 flex-wrap">
@@ -158,6 +194,21 @@
       }
     ];
 
+    // Fungsi untuk membuka & menutup Sidebar Menu
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      
+      if (sidebar.classList.contains('translate-x-full')) {
+        sidebar.classList.remove('translate-x-full');
+        overlay.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('translate-x-full');
+        overlay.classList.add('hidden');
+      }
+    }
+
+    // Fungsi untuk memindah Tab Produk vs About Us
     function showTab(tab) {
       document.getElementById('section-produk').classList.toggle('hidden', tab !== 'produk');
       document.getElementById('section-about').classList.toggle('hidden', tab !== 'about');
@@ -170,6 +221,7 @@
       document.getElementById('nav-about').classList.toggle('text-black', tab === 'about');
     }
 
+    // Fungsi untuk menampilkan Detail Produk
     function showDetail(idx) {
       const p = products[idx];
       const container = document.getElementById('detail-content');
@@ -195,6 +247,7 @@
       document.getElementById('section-detail').classList.remove('hidden');
     }
 
+    // Fungsi untuk kembali ke Katalog
     function hideDetail() {
       document.getElementById('section-detail').classList.add('hidden');
       document.getElementById('section-produk').classList.remove('hidden');
