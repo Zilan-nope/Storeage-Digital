@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Storeage Digital Studio</title>
+  
+  <!-- 1. LOGO DI TAB BROWSER (FAVICON) -->
+  <link rel="icon" type="image/png" href="images/web%20logo.png">
+  
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Fraunces:wght@700;900&amp;display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    .font-display { font-family: 'Fraunces', serif; }
+    .tab-active { border-bottom: 3px solid #7c3aed; color: #7c3aed; }
+  </style>
+ </head>
+ <body class="min-h-screen bg-gray-50">
+  
+  <!-- Header Banner -->
+  <header class="relative h-56 overflow-hidden">
+   <img src="images/hero.jpg" class="w-full h-full object-cover" loading="lazy">
+   
+   <!-- 2. LOGO DI UJUNG ATAS BANNER WEBSITE -->
+   <div class="absolute top-4 left-4 z-10">
+    <img src="images/web%20logo.png" class="w-14 h-14 rounded-xl bg-white/90 p-1.5 shadow-lg object-contain backdrop-blur-sm">
+   </div>
+
+   <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80 flex items-end p-6">
+    <h1 class="font-display text-white text-3xl font-bold">STOREAGE DIGITAL STUDIO</h1>
+   </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="max-w-3xl mx-auto flex border-b border-gray-200 bg-white shadow-sm">
+   <button id="tab-produk" class="flex-1 py-4 text-center font-bold tab-active" onclick="showTab('produk')">Produk</button> 
+   <button id="tab-about" class="flex-1 py-4 text-center font-bold text-gray-500" onclick="showTab('about')">About Us</button>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto px-4 py-8">
+   <!-- Product Grid -->
+   <section id="section-produk">
+    <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">Katalog Produk</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+     
+     <!-- Produk 1 -->
+     <div class="bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition" onclick="showDetail(0)">
+      <img src="images/logo-design.jpg" class="w-full h-48 object-cover" loading="lazy">
+      <div class="p-4">
+       <h3 class="font-bold text-gray-900 text-lg">Logo Design</h3>
+       <p class="text-purple-600 font-bold mt-1">Rp 150.000</p>
+      </div>
+     </div>
+
+     <!-- Produk 2 -->
+     <div class="bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition" onclick="showDetail(1)">
+      <img src="images/canva-template.jpg" class="w-full h-48 object-cover" loading="lazy">
+      <div class="p-4">
+       <h3 class="font-bold text-gray-900 text-lg">Canva Post Template</h3>
+       <p class="text-purple-600 font-bold mt-1">Rp 75.000</p>
+      </div>
+     </div>
+
+     <!-- Produk 3 -->
+     <div class="bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition" onclick="showDetail(2)">
+      <img src="images/ai-prompt.jpg" class="w-full h-48 object-cover" loading="lazy">
+      <div class="p-4">
+       <h3 class="font-bold text-gray-900 text-lg">AI Prompt Pack</h3>
+       <p class="text-purple-600 font-bold mt-1">Rp 50.000</p>
+      </div>
+     </div>
+
+     <!-- Produk 4 -->
+     <div class="bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition" onclick="showDetail(3)">
+      <img src="images/cv-portfolio.jpg" class="w-full h-48 object-cover" loading="lazy">
+      <div class="p-4">
+       <h3 class="font-bold text-gray-900 text-lg">CV & Portfolio Template</h3>
+       <p class="text-purple-600 font-bold mt-1">Rp 100.000</p>
+      </div>
+     </div>
+
+    </div>
+   </section>
+
+   <!-- Product Detail View -->
+   <section id="section-detail" class="hidden">
+    <button onclick="hideDetail()" class="flex items-center gap-2 text-purple-600 font-bold mb-6 hover:underline"> 
+     <i data-lucide="arrow-left" style="width:20px;height:20px"></i> Kembali 
+    </button>
+    <div id="detail-content"></div>
+   </section>
+
+   <!-- About -->
+   <section id="section-about" class="hidden">
+    <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">About Us</h2>
+    <img src="images/about.jpg" class="w-full h-64 object-cover rounded-xl mb-6" loading="lazy">
+    <p class="leading-relaxed text-gray-600 text-base">
+     Storeage Digital Studio adalah platform penyedia produk digital berkualitas tinggi. Kami menyediakan solusi desain kreatif seperti logo profesional, template Canva siap pakai, koleksi prompt AI pilihan, hingga template CV & Portfolio untuk meningkatkan branding dan mendukung karir profesional Anda.
+    </p>
+   </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 py-6 bg-white mt-12">
+   <div class="max-w-3xl mx-auto px-4">
+    <p class="text-center font-bold mb-4 text-gray-700">Follow Us</p>
+    <div class="flex justify-center gap-4 flex-wrap">
+     <a href="https://www.instagram.com/storeage_mart/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium hover:opacity-90 transition"><i data-lucide="instagram" style="width:20px;height:20px"></i> Instagram</a> 
+     <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-black text-white font-medium hover:opacity-90 transition">
+      <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor">
+       <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.37a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.8z" />
+      </svg> TikTok</a> 
+     <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white font-medium hover:opacity-90 transition"><i data-lucide="facebook" style="width:20px;height:20px"></i> Facebook</a>
+    </div>
+   </div>
+  </footer>
+
+  <script>
+    const products = [
+      {
+        name: 'Logo Design',
+        price: 'Rp 150.000',
+        variants: [
+          { name: 'Logo Minimalis', price: 'Rp 150.000' },
+          { name: 'Logo Mascot', price: 'Rp 250.000' },
+          { name: 'Logo Wordmark', price: 'Rp 120.000' },
+          { name: 'Logo + Brand Kit', price: 'Rp 350.000' }
+        ]
+      },
+      {
+        name: 'Canva Post Template',
+        price: 'Rp 75.000',
+        variants: [
+          { name: 'Feed Post (10 desain)', price: 'Rp 75.000' },
+          { name: 'Story Template (10 desain)', price: 'Rp 60.000' },
+          { name: 'Carousel Template (5 set)', price: 'Rp 85.000' },
+          { name: 'Bundle All Template', price: 'Rp 180.000' }
+        ]
+      },
+      {
+        name: 'AI Prompt Pack',
+        price: 'Rp 50.000',
+        variants: [
+          { name: 'ChatGPT Prompt Pack', price: 'Rp 50.000' },
+          { name: 'Midjourney Prompt Pack', price: 'Rp 65.000' },
+          { name: 'DALL-E Prompt Pack', price: 'Rp 55.000' },
+          { name: 'Bundle All AI Prompts', price: 'Rp 130.000' }
+        ]
+      },
+      {
+        name: 'CV & Portfolio Template',
+        price: 'Rp 100.000',
+        variants: [
+          { name: 'CV Modern (Canva)', price: 'Rp 50.000' },
+          { name: 'CV ATS-Friendly', price: 'Rp 60.000' },
+          { name: 'Portfolio Digital', price: 'Rp 80.000' },
+          { name: 'Bundle CV + Portfolio', price: 'Rp 100.000' }
+        ]
+      }
+    ];
+
+    function showTab(tab) {
+      document.getElementById('section-produk').classList.toggle('hidden', tab !== 'produk');
+      document.getElementById('section-about').classList.toggle('hidden', tab !== 'about');
+      document.getElementById('section-detail').classList.add('hidden');
+      document.getElementById('tab-produk').classList.toggle('tab-active', tab === 'produk');
+      document.getElementById('tab-about').classList.toggle('tab-active', tab === 'about');
+      document.getElementById('tab-produk').classList.toggle('text-gray-500', tab !== 'produk');
+      document.getElementById('tab-about').classList.toggle('text-gray-500', tab !== 'about');
+    }
+
+    function showDetail(idx) {
+      const p = products[idx];
+      const container = document.getElementById('detail-content');
+      container.innerHTML = `
+        <h2 class="font-bold text-2xl text-gray-900 mb-2" style="font-family:'Fraunces',serif">${p.name}</h2>
+        <p class="text-purple-600 font-bold mb-6">Mulai dari ${p.price}</p>
+        <h3 class="font-bold text-gray-700 mb-3">Pilih Jenis:</h3>
+        <div class="space-y-3">
+          ${p.variants.map(v => `
+            <div class="flex items-center justify-between bg-white rounded-lg p-4 shadow border border-gray-100">
+              <div>
+                <p class="font-semibold text-gray-900">${v.name}</p>
+                <p class="text-purple-600 font-bold text-sm">${v.price}</p>
+              </div>
+              <a href="https://wa.me/?text=${encodeURIComponent('Halo, saya ingin memesan ' + v.name + ' (' + v.price + ') dari Storeage Digital Studio')}" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-green-500 text-white rounded-lg font-bold text-sm hover:bg-green-600 transition flex items-center gap-1">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.09-1.12l-.29-.174-3.01.79.8-2.93-.19-.3A8 8 0 1112 20z"/></svg>
+                Pesan
+              </a>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      document.getElementById('section-produk').classList.add('hidden');
+      document.getElementById('section-detail').classList.remove('hidden');
+    }
+
+    function hideDetail() {
+      document.getElementById('section-detail').classList.add('hidden');
+      document.getElementById('section-produk').classList.remove('hidden');
+    }
+
+    lucide.createIcons();
+  </script>
+ </body>
+</html>
