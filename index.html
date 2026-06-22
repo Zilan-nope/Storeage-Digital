@@ -6,8 +6,6 @@
   <title>Storeage Digital Studio</title>
   <link rel="icon" type="image/png" href="images/imagesweb_20logo.png">
   
-
-  
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Fraunces:wght@700;900&amp;display=swap" rel="stylesheet">
@@ -19,13 +17,11 @@
  </head>
  <body class="min-h-screen bg-gray-50">
   
-  <!-- Header Banner -->
   <header class="relative h-56 overflow-hidden">
    <img src="images/hero.jpg" class="w-full h-full object-cover" loading="lazy">
    
-   <!-- 2. LOGO DI UJUNG ATAS BANNER WEBSITE -->
    <div class="absolute top-4 left-4 z-10">
-    <img src="images/web%20logo.png" class="w-14 h-14 rounded-xl bg-white/90 p-1.5 shadow-lg object-contain backdrop-blur-sm">
+    <img src="images/imagesweb_20logo.png" class="w-14 h-14 rounded-xl bg-white/90 p-1.5 shadow-lg object-contain backdrop-blur-sm">
    </div>
 
    <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/80 flex items-end p-6">
@@ -33,20 +29,16 @@
    </div>
   </header>
 
-  <!-- Navigation -->
   <nav class="max-w-3xl mx-auto flex border-b border-gray-200 bg-white shadow-sm">
    <button id="tab-produk" class="flex-1 py-4 text-center font-bold tab-active" onclick="showTab('produk')">Produk</button> 
    <button id="tab-about" class="flex-1 py-4 text-center font-bold text-gray-500" onclick="showTab('about')">About Us</button>
   </nav>
 
-  <!-- Main Content -->
   <main class="max-w-3xl mx-auto px-4 py-8">
-   <!-- Product Grid -->
    <section id="section-produk">
     <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">Katalog Produk</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
      
-     <!-- Produk 1 -->
      <div class="bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition" onclick="showDetail(0)">
       <img src="images/logo-design.jpg" class="w-full h-48 object-cover" loading="lazy">
       <div class="p-4">
@@ -55,7 +47,6 @@
       </div>
      </div>
 
-     <!-- Produk 2 -->
      <div class="bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition" onclick="showDetail(1)">
       <img src="images/canva-template.jpg" class="w-full h-48 object-cover" loading="lazy">
       <div class="p-4">
@@ -64,7 +55,6 @@
       </div>
      </div>
 
-     <!-- Produk 3 -->
      <div class="bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition" onclick="showDetail(2)">
       <img src="images/ai-prompt.jpg" class="w-full h-48 object-cover" loading="lazy">
       <div class="p-4">
@@ -73,7 +63,6 @@
       </div>
      </div>
 
-     <!-- Produk 4 -->
      <div class="bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer hover:shadow-xl transition" onclick="showDetail(3)">
       <img src="images/cv-portfolio.jpg" class="w-full h-48 object-cover" loading="lazy">
       <div class="p-4">
@@ -85,7 +74,6 @@
     </div>
    </section>
 
-   <!-- Product Detail View -->
    <section id="section-detail" class="hidden">
     <button onclick="hideDetail()" class="flex items-center gap-2 text-purple-600 font-bold mb-6 hover:underline"> 
      <i data-lucide="arrow-left" style="width:20px;height:20px"></i> Kembali 
@@ -93,7 +81,6 @@
     <div id="detail-content"></div>
    </section>
 
-   <!-- About -->
    <section id="section-about" class="hidden">
     <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">About Us</h2>
     <img src="images/about.jpg" class="w-full h-64 object-cover rounded-xl mb-6" loading="lazy">
@@ -103,7 +90,6 @@
    </section>
   </main>
 
-  <!-- Footer -->
   <footer class="border-t border-gray-200 py-6 bg-white mt-12">
    <div class="max-w-3xl mx-auto px-4">
     <p class="text-center font-bold mb-4 text-gray-700">Follow Us</p>
