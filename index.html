@@ -1,258 +1,420 @@
 <!doctype html>
-<html lang="en">
+<html lang="id">
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Storeage Digital Studio</title>
-  
-  <!-- Favicon Logo -->
+  <title>ZitByte — Produk Digital Siap Pakai</title>
+
   <link rel="icon" type="image/svg+xml" href="images/tab%20logo%20website.svg">
-  
+
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&amp;family=Fraunces:wght@700;900&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'DM Sans', sans-serif; }
-    .font-display { font-family: 'Fraunces', serif; }
+    :root{
+      --ink:#17171A;
+      --bg:#FAFAF9;
+      --accent:#6D4AFF;
+      --accent-dark:#4F31D6;
+      --mint:#B4F461;
+      --mint-ink:#2B4406;
+    }
+    body{ font-family:'DM Sans', sans-serif; background:var(--bg); color:var(--ink); }
+    .font-display{ font-family:'Fraunces', serif; }
+    .font-mono{ font-family:'Space Mono', monospace; }
+    .accent{ color: var(--accent); }
+    .bg-accent{ background: var(--accent); }
+    .bg-accent-dark{ background: var(--accent-dark); }
+    .cat-chip{ font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.03em; }
+    ::-webkit-scrollbar{ display:none; }
+    .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
   </style>
  </head>
- <body class="min-h-screen bg-gray-50 text-gray-900 overflow-x-hidden">
+ <body class="min-h-screen text-gray-900 overflow-x-hidden">
 
-  <!-- Navbar Atas -->
-  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+  <!-- Navbar -->
+  <header class="bg-white/95 backdrop-blur border-b border-gray-200 sticky top-0 z-40">
     <div class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center">
-      <!-- Logo & Nama Toko -->
       <div class="flex items-center gap-3">
-        <img src="images/imagesweb_20logo.png" alt="Logo" class="w-10 h-10 object-contain rounded bg-gray-100 p-1 border">
-        <h1 class="font-display font-bold text-xl tracking-tight uppercase">STOREAGE</h1>
+        <img src="images/imagesweb_20logo.png" alt="ZitByte logo" class="w-9 h-9 object-contain rounded bg-gray-100 p-1 border border-gray-200">
+        <h1 class="font-display font-bold text-xl tracking-tight">ZitByte</h1>
       </div>
-      
-      <!-- Tombol Hamburger (Menu) -->
-      <button onclick="toggleSidebar()" class="p-2 text-gray-800 hover:bg-gray-100 rounded-lg transition">
-        <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
-      </button>
+
+      <div class="flex items-center gap-1">
+        <button onclick="toggleCart()" class="relative p-2 text-gray-800 hover:bg-gray-100 rounded-lg transition">
+          <i data-lucide="shopping-bag" style="width:22px;height:22px"></i>
+          <span id="cart-badge" class="hidden absolute -top-1 -right-1 bg-accent text-white text-[10px] font-bold w-4 h-4 rounded-full items-center justify-center font-mono">0</span>
+        </button>
+        <button onclick="toggleSidebar()" class="p-2 text-gray-800 hover:bg-gray-100 rounded-lg transition">
+          <i data-lucide="menu" style="width:22px;height:22px"></i>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Sidebar Overlay (Latar Belakang Gelap saat Menu Terbuka) -->
+  <!-- Menu overlay + sidebar -->
   <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300" onclick="toggleSidebar()"></div>
-
-  <!-- Sidebar Menu (Slide dari Kanan) -->
   <div id="sidebar" class="fixed top-0 right-0 h-full w-64 bg-[#F2F2F2] z-50 transform translate-x-full transition-transform duration-300 shadow-2xl">
     <div class="p-6">
-      <!-- Header Sidebar -->
       <div class="flex justify-between items-center mb-8 border-b border-gray-300 pb-4">
-        <h2 class="font-semibold tracking-[0.15em] text-sm text-gray-800 uppercase">Menu Links</h2>
+        <h2 class="font-mono tracking-[0.15em] text-xs text-gray-800 uppercase">Menu</h2>
         <button onclick="toggleSidebar()" class="p-2 text-gray-500 hover:text-black hover:bg-gray-200 rounded-lg transition">
-          <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+          <i data-lucide="x" style="width:20px;height:20px"></i>
         </button>
       </div>
-      
-      <!-- List Menu -->
       <div class="flex flex-col space-y-4 text-[15px] text-gray-700">
         <a href="#" onclick="showTab('produk'); toggleSidebar(); return false;" id="nav-produk" class="font-bold text-black hover:opacity-60 transition">Produk</a>
-        <a href="#" onclick="showTab('about'); toggleSidebar(); return false;" id="nav-about" class="hover:opacity-60 transition">About Us</a>
-        <a href="#" class="hover:opacity-60 transition">How To Order</a>
+        <a href="#" onclick="showTab('about'); toggleSidebar(); return false;" id="nav-about" class="hover:opacity-60 transition">Tentang Kami</a>
+        <a href="#" class="hover:opacity-60 transition">Cara Pesan</a>
         <a href="#" class="hover:opacity-60 transition">FAQ</a>
-        <a href="#" class="hover:opacity-60 transition">Contact Us</a>
-        <a href="#" class="hover:opacity-60 transition">Terms & Conditions</a>
+        <a href="#" class="hover:opacity-60 transition">Hubungi Kami</a>
+        <a href="#" class="hover:opacity-60 transition">Syarat & Ketentuan</a>
       </div>
     </div>
   </div>
 
-  <!-- Main Content -->
-  <main class="max-w-3xl mx-auto bg-white min-h-screen pb-12 shadow-sm">
-    
-   <!-- Gambar Banner / Hero di Tengah -->
-   <div class="w-full relative h-48 sm:h-64 mb-8">
-     <img src="images/heros.svg" class="w-full h-full object-cover" loading="lazy" alt="Banner Storeage">
-     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-6">
-       <h2 class="font-display text-white text-2xl sm:text-3xl font-bold">DIGITAL STUDIO</h2>
+  <!-- Cart overlay + drawer -->
+  <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300" onclick="toggleCart()"></div>
+  <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+    <div class="flex justify-between items-center p-5 border-b border-gray-200">
+      <h2 class="font-display font-bold text-lg">Keranjang</h2>
+      <button onclick="toggleCart()" class="p-2 text-gray-500 hover:text-black hover:bg-gray-100 rounded-lg transition">
+        <i data-lucide="x" style="width:20px;height:20px"></i>
+      </button>
+    </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
+    <div id="cart-footer" class="border-t border-gray-200 p-5 space-y-4"></div>
+  </div>
+
+  <!-- Main -->
+  <main class="max-w-3xl mx-auto bg-white min-h-screen pb-24 shadow-sm">
+
+   <div class="w-full relative h-48 sm:h-64 mb-6">
+     <img src="images/heros.svg" class="w-full h-full object-cover" loading="lazy" alt="Banner ZitByte">
+     <div class="absolute inset-0 bg-gradient-to-t from-black/65 to-transparent flex flex-col justify-end p-6">
+       <p class="font-mono text-white/80 text-xs tracking-[0.2em] uppercase mb-1">ZitByte Studio</p>
+       <h2 class="font-display text-white text-2xl sm:text-3xl font-bold leading-tight">Produk digital,<br>siap pakai.</h2>
+     </div>
+   </div>
+
+   <!-- Trust bar -->
+   <div class="px-6 mb-8">
+     <div class="flex flex-wrap gap-2 text-xs">
+       <span class="cat-chip flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full"><i data-lucide="zap" style="width:12px;height:12px"></i> Kirim instan</span>
+       <span class="cat-chip flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full"><i data-lucide="qr-code" style="width:12px;height:12px"></i> QRIS & e-wallet</span>
+       <span class="cat-chip flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full"><i data-lucide="shield-check" style="width:12px;height:12px"></i> Revisi ringan</span>
      </div>
    </div>
 
    <div class="px-6">
-     <!-- Product Grid -->
      <section id="section-produk">
-      <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">Katalog Produk</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-       
-       <!-- Produk 1 -->
-       <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(0)">
-        <img src="images/logo-design.jpg" class="w-full h-48 object-cover" loading="lazy" alt="Logo Design">
-        <div class="p-4">
-         <h3 class="font-bold text-gray-900 text-lg">Logo Design</h3>
-         <p class="text-purple-600 font-bold mt-1">Rp 150.000</p>
-        </div>
-       </div>
+      <h2 class="font-display text-2xl font-bold text-gray-900 mb-4">Katalog Produk</h2>
 
-       <!-- Produk 2 -->
-       <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(1)">
-        <img src="images/canva-template.jpg" class="w-full h-48 object-cover" loading="lazy" alt="Canva Post Template">
-        <div class="p-4">
-         <h3 class="font-bold text-gray-900 text-lg">Canva Post Template</h3>
-         <p class="text-purple-600 font-bold mt-1">Rp 75.000</p>
-        </div>
-       </div>
-
-       <!-- Produk 3 -->
-       <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(2)">
-        <img src="images/ai-prompt.jpg" class="w-full h-48 object-cover" loading="lazy" alt="AI Prompt Pack">
-        <div class="p-4">
-         <h3 class="font-bold text-gray-900 text-lg">AI Prompt / APK Pack</h3>
-         <p class="text-purple-600 font-bold mt-1">Rp 50.000</p>
-        </div>
-       </div>
-
-       <!-- Produk 4 -->
-       <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(3)">
-        <img src="images/cv-portfolio.jpg" class="w-full h-48 object-cover" loading="lazy" alt="CV & Portfolio">
-        <div class="p-4">
-         <h3 class="font-bold text-gray-900 text-lg">CV & Portfolio Template</h3>
-         <p class="text-purple-600 font-bold mt-1">Rp 100.000</p>
-        </div>
-       </div>
-
+      <!-- Category chips -->
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-2 -mx-1 px-1">
+        <button onclick="filterCategory('semua')" data-cat-btn="semua" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Semua</button>
+        <button onclick="filterCategory('desain')" data-cat-btn="desain" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Desain</button>
+        <button onclick="filterCategory('template')" data-cat-btn="template" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Template</button>
+        <button onclick="filterCategory('ai')" data-cat-btn="ai" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">AI Tools</button>
+        <button onclick="filterCategory('karir')" data-cat-btn="karir" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Karir</button>
       </div>
+
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-5"></div>
      </section>
 
-     <!-- Product Detail View -->
      <section id="section-detail" class="hidden">
-      <button onclick="hideDetail()" class="flex items-center gap-2 text-gray-500 font-bold mb-6 hover:text-black transition"> 
-       <i data-lucide="arrow-left" style="width:20px;height:20px"></i> Kembali 
+      <button onclick="hideDetail()" class="flex items-center gap-2 text-gray-500 font-bold mb-6 hover:text-black transition">
+       <i data-lucide="arrow-left" style="width:20px;height:20px"></i> Kembali
       </button>
       <div id="detail-content"></div>
      </section>
 
-     <!-- About Section -->
      <section id="section-about" class="hidden">
-      <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">About Us</h2>
-      <img src="images/about.jpg" class="w-full h-64 object-cover rounded-xl mb-6 shadow-sm" loading="lazy" alt="About Us">
+      <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">Tentang Kami</h2>
+      <img src="images/about.jpg" class="w-full h-64 object-cover rounded-xl mb-6 shadow-sm" loading="lazy" alt="Tentang ZitByte">
       <p class="leading-relaxed text-gray-600 text-base">
-       Storeage Digital Studio adalah platform penyedia produk digital berkualitas tinggi. Kami menyediakan solusi desain kreatif seperti logo profesional, template Canva siap pakai, koleksi prompt AI pilihan, hingga template CV & Portfolio untuk meningkatkan branding dan mendukung karir profesional Anda.
+       ZitByte adalah studio digital yang menyediakan produk siap pakai untuk kebutuhan branding dan karir Anda: logo profesional, template Canva, koleksi prompt AI pilihan, hingga template CV & portofolio. Semua produk dikirim instan setelah pemesanan dikonfirmasi.
       </p>
      </section>
    </div>
   </main>
 
+  <!-- Sticky mobile cart bar -->
+  <div id="sticky-cart-bar" class="hidden fixed bottom-0 left-0 right-0 z-30 bg-black text-white px-5 py-3 flex items-center justify-between max-w-3xl mx-auto">
+    <div class="font-mono text-sm">
+      <span id="sticky-cart-count">0</span> item · Rp <span id="sticky-cart-total">0</span>
+    </div>
+    <button onclick="toggleCart()" class="bg-white text-black font-bold text-sm px-4 py-2 rounded-lg">Lihat Keranjang</button>
+  </div>
+
   <!-- Footer -->
   <footer class="border-t border-gray-200 py-10 bg-white">
    <div class="max-w-3xl mx-auto px-6">
-    <p class="text-center font-bold mb-6 text-gray-400 uppercase tracking-widest text-sm">Follow Us</p>
+    <p class="text-center font-mono mb-6 text-gray-400 uppercase tracking-widest text-xs">Ikuti Kami</p>
     <div class="flex justify-center gap-4 flex-wrap">
-     <a href="https://www.instagram.com/storeage_mart/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-black transition"><i data-lucide="instagram" style="width:18px;height:18px"></i> Instagram</a> 
+     <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-black transition"><i data-lucide="instagram" style="width:18px;height:18px"></i> Instagram</a>
      <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-black transition">
       <svg width="18" height="18" viewbox="0 0 24 24" fill="currentColor">
        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.37a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.8z" />
-      </svg> TikTok</a> 
+      </svg> TikTok</a>
      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-black transition"><i data-lucide="facebook" style="width:18px;height:18px"></i> Facebook</a>
     </div>
+    <p class="text-center text-xs text-gray-400 mt-6">Perbarui tautan sosial media di atas dengan akun resmi ZitByte Anda.</p>
    </div>
   </footer>
 
   <script>
+    const WA_NUMBER = '6282142645156';
+
     const products = [
-      {
-        name: 'Logo Design',
-        price: 'Rp 150.000',
-        variants: [
-          { name: 'Logo Minimalis', price: 'Rp 150.000' },
-          { name: 'Logo Mascot', price: 'Rp 250.000' },
-          { name: 'Logo Wordmark', price: 'Rp 120.000' },
-          { name: 'Logo + Brand Kit', price: 'Rp 350.000' }
-        ]
-      },
-      {
-        name: 'Canva Post Template',
-        price: 'Rp 75.000',
-        variants: [
-          { name: 'Feed Post (10 desain)', price: 'Rp 75.000' },
-          { name: 'Story Template (10 desain)', price: 'Rp 60.000' },
-          { name: 'Carousel Template (5 set)', price: 'Rp 85.000' },
-          { name: 'Bundle All Template', price: 'Rp 180.000' }
-        ]
-      },
-      {
-        name: 'AI Prompt Pack',
-        price: 'Rp 50.000',
-        variants: [
-          { name: 'ChatGPT Prompt Pack', price: 'Rp 50.000' },
-          { name: 'APK Prompt Pack', price: 'Rp 75.000' },
-          { name: 'NGOPILIATE tools', price: 'Rp 85.000' },
-          { name: 'Bundle All AI Prompts', price: 'Rp 150.000' }
-        ]
-      },
-      {
-        name: 'CV & Portfolio Template',
-        price: 'Rp 100.000',
-        variants: [
-          { name: 'CV Modern (Canva)', price: 'Rp 50.000' },
-          { name: 'CV ATS-Friendly', price: 'Rp 60.000' },
-          { name: 'Portfolio Digital', price: 'Rp 80.000' },
-          { name: 'Bundle CV + Portfolio', price: 'Rp 100.000' }
-        ]
-      }
+      { name:'Logo Design', category:'desain', price:'Rp 150.000', img:'images/logo-design.jpg',
+        variants:[
+          { name:'Logo Minimalis', price:150000 },
+          { name:'Logo Mascot', price:250000 },
+          { name:'Logo Wordmark', price:120000 },
+          { name:'Logo + Brand Kit', price:350000 }
+        ]},
+      { name:'Canva Post Template', category:'template', price:'Rp 75.000', img:'images/canva-template.jpg',
+        variants:[
+          { name:'Feed Post (10 desain)', price:75000 },
+          { name:'Story Template (10 desain)', price:60000 },
+          { name:'Carousel Template (5 set)', price:85000 },
+          { name:'Bundle All Template', price:180000 }
+        ]},
+      { name:'AI Prompt / APK Pack', category:'ai', price:'Rp 50.000', img:'images/ai-prompt.jpg',
+        variants:[
+          { name:'ChatGPT Prompt Pack', price:50000 },
+          { name:'APK Prompt Pack', price:75000 },
+          { name:'NGOPILIATE tools', price:85000 },
+          { name:'Bundle All AI Prompts', price:150000 }
+        ]},
+      { name:'CV & Portfolio Template', category:'karir', price:'Rp 100.000', img:'images/cv-portfolio.jpg',
+        variants:[
+          { name:'CV Modern (Canva)', price:50000 },
+          { name:'CV ATS-Friendly', price:60000 },
+          { name:'Portfolio Digital', price:80000 },
+          { name:'Bundle CV + Portfolio', price:100000 }
+        ]}
     ];
 
-    // Fungsi untuk membuka & menutup Sidebar Menu
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('sidebar-overlay');
-      
-      if (sidebar.classList.contains('translate-x-full')) {
-        sidebar.classList.remove('translate-x-full');
-        overlay.classList.remove('hidden');
-      } else {
-        sidebar.classList.add('translate-x-full');
-        overlay.classList.add('hidden');
-      }
+    const categoryLabels = { desain:'Desain', template:'Template', ai:'AI Tools', karir:'Karir' };
+    const paymentMethods = [
+      { id:'qris', label:'QRIS' },
+      { id:'gopay', label:'GoPay' },
+      { id:'ovo_dana', label:'OVO / DANA' },
+      { id:'transfer', label:'Transfer Bank' }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem('zitbyte_cart') || '[]');
+    let selectedPayment = 'qris';
+    let activeCategory = 'semua';
+
+    function fmt(n){ return n.toLocaleString('id-ID'); }
+
+    function saveCart(){ localStorage.setItem('zitbyte_cart', JSON.stringify(cart)); }
+
+    function renderProductGrid(){
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = products
+        .filter(p => activeCategory === 'semua' || p.category === activeCategory)
+        .map(p => {
+          const idx = products.indexOf(p);
+          return `
+          <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(${idx})">
+            <div class="relative">
+              <img src="${p.img}" class="w-full h-48 object-cover" loading="lazy" alt="${p.name}">
+              <span class="cat-chip absolute top-3 left-3 bg-white/90 text-gray-800 px-2.5 py-1 rounded-full">${categoryLabels[p.category]}</span>
+            </div>
+            <div class="p-4">
+             <h3 class="font-bold text-gray-900 text-lg">${p.name}</h3>
+             <p class="font-mono accent font-bold mt-1">${p.price}</p>
+            </div>
+          </div>`;
+        }).join('');
     }
 
-    // Fungsi untuk memindah Tab Produk vs About Us
-    function showTab(tab) {
+    function filterCategory(cat){
+      activeCategory = cat;
+      document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+        const on = btn.dataset.catBtn === cat;
+        btn.style.background = on ? 'var(--ink)' : 'transparent';
+        btn.style.color = on ? '#fff' : '#374151';
+        btn.style.borderColor = on ? 'var(--ink)' : '#e5e7eb';
+      });
+      renderProductGrid();
+    }
+
+    function toggleSidebar(){
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      const closed = sidebar.classList.contains('translate-x-full');
+      sidebar.classList.toggle('translate-x-full', !closed);
+      overlay.classList.toggle('hidden', !closed);
+    }
+
+    function showTab(tab){
       document.getElementById('section-produk').classList.toggle('hidden', tab !== 'produk');
       document.getElementById('section-about').classList.toggle('hidden', tab !== 'about');
       document.getElementById('section-detail').classList.add('hidden');
-      
-      // Update warna font saat menu di klik
       document.getElementById('nav-produk').classList.toggle('font-bold', tab === 'produk');
       document.getElementById('nav-produk').classList.toggle('text-black', tab === 'produk');
       document.getElementById('nav-about').classList.toggle('font-bold', tab === 'about');
       document.getElementById('nav-about').classList.toggle('text-black', tab === 'about');
     }
 
-    // Fungsi untuk menampilkan Detail Produk
-    function showDetail(idx) {
+    function showDetail(idx){
       const p = products[idx];
       const container = document.getElementById('detail-content');
       container.innerHTML = `
+        <span class="cat-chip inline-block bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full mb-3">${categoryLabels[p.category]}</span>
         <h2 class="font-bold text-2xl text-gray-900 mb-2" style="font-family:'Fraunces',serif">${p.name}</h2>
-        <p class="text-purple-600 font-bold mb-6">Mulai dari ${p.price}</p>
+        <p class="font-mono accent font-bold mb-6">Mulai dari ${p.price}</p>
         <h3 class="font-bold text-gray-700 mb-3">Pilih Jenis:</h3>
         <div class="space-y-3">
-          ${p.variants.map(v => `
+          ${p.variants.map((v, vi) => `
             <div class="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm border border-gray-100">
               <div>
                 <p class="font-semibold text-gray-900">${v.name}</p>
-                <p class="text-gray-500 font-medium text-sm mt-0.5">${v.price}</p>
+                <p class="font-mono text-gray-500 text-sm mt-0.5">Rp ${fmt(v.price)}</p>
               </div>
-              <a href="https://wa.me/6282142645156?text=${encodeURIComponent('Halo, saya ingin memesan ' + v.name + ' (' + v.price + ') dari Storeage Digital Studio')}" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 bg-black text-white rounded-lg font-bold text-sm hover:bg-gray-800 transition flex items-center gap-1.5">
-                Pesan
-              </a>
+              <button onclick="addToCart(${idx}, ${vi})" class="px-4 py-2.5 bg-black text-white rounded-lg font-bold text-sm hover:bg-gray-800 transition flex items-center gap-1.5">
+                <i data-lucide="plus" style="width:15px;height:15px"></i> Keranjang
+              </button>
             </div>
           `).join('')}
         </div>
       `;
       document.getElementById('section-produk').classList.add('hidden');
       document.getElementById('section-detail').classList.remove('hidden');
+      lucide.createIcons();
     }
 
-    // Fungsi untuk kembali ke Katalog
-    function hideDetail() {
+    function hideDetail(){
       document.getElementById('section-detail').classList.add('hidden');
       document.getElementById('section-produk').classList.remove('hidden');
     }
 
+    function addToCart(productIdx, variantIdx){
+      const p = products[productIdx];
+      const v = p.variants[variantIdx];
+      const existing = cart.find(c => c.productIdx === productIdx && c.variantIdx === variantIdx);
+      if (existing) existing.qty += 1;
+      else cart.push({ productIdx, variantIdx, name:p.name, variantName:v.name, price:v.price, qty:1 });
+      saveCart();
+      renderCart();
+      openCart();
+    }
+
+    function changeQty(i, delta){
+      cart[i].qty += delta;
+      if (cart[i].qty <= 0) cart.splice(i, 1);
+      saveCart();
+      renderCart();
+    }
+
+    function cartTotal(){ return cart.reduce((sum, c) => sum + c.price * c.qty, 0); }
+    function cartCount(){ return cart.reduce((sum, c) => sum + c.qty, 0); }
+
+    function renderCart(){
+      const itemsEl = document.getElementById('cart-items');
+      const footerEl = document.getElementById('cart-footer');
+      const badge = document.getElementById('cart-badge');
+      const stickyBar = document.getElementById('sticky-cart-bar');
+
+      if (cart.length === 0){
+        itemsEl.innerHTML = `<p class="text-gray-400 text-sm text-center mt-10">Keranjang masih kosong.</p>`;
+        footerEl.innerHTML = '';
+        badge.classList.add('hidden');
+        stickyBar.classList.add('hidden');
+        return;
+      }
+
+      itemsEl.innerHTML = cart.map((c, i) => `
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+          <div>
+            <p class="font-semibold text-sm text-gray-900">${c.name}</p>
+            <p class="text-xs text-gray-500">${c.variantName}</p>
+            <p class="font-mono text-xs text-gray-700 mt-1">Rp ${fmt(c.price)}</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="changeQty(${i}, -1)" class="w-7 h-7 flex items-center justify-center border border-gray-200 rounded-lg text-gray-600">-</button>
+            <span class="font-mono text-sm w-4 text-center">${c.qty}</span>
+            <button onclick="changeQty(${i}, 1)" class="w-7 h-7 flex items-center justify-center border border-gray-200 rounded-lg text-gray-600">+</button>
+          </div>
+        </div>
+      `).join('');
+
+      footerEl.innerHTML = `
+        <div>
+          <p class="text-xs font-mono uppercase tracking-wide text-gray-400 mb-2">Metode Pembayaran</p>
+          <div class="grid grid-cols-2 gap-2">
+            ${paymentMethods.map(pm => `
+              <button onclick="selectPayment('${pm.id}')" data-pay-btn="${pm.id}" class="pay-btn cat-chip px-3 py-2 rounded-lg border-2 transition text-center">${pm.label}</button>
+            `).join('')}
+          </div>
+        </div>
+        <div class="flex items-center justify-between pt-2">
+          <span class="text-sm text-gray-500">Total</span>
+          <span class="font-mono font-bold text-lg">Rp ${fmt(cartTotal())}</span>
+        </div>
+        <button onclick="checkoutWhatsApp()" class="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition flex items-center justify-center gap-2">
+          <i data-lucide="message-circle" style="width:18px;height:18px"></i> Pesan via WhatsApp
+        </button>
+        <p class="text-xs text-gray-400 text-center">Instruksi pembayaran dikirim setelah pesanan dikonfirmasi via WhatsApp.</p>
+      `;
+
+      badge.textContent = cartCount();
+      badge.classList.remove('hidden');
+      badge.classList.add('flex');
+
+      document.getElementById('sticky-cart-count').textContent = cartCount();
+      document.getElementById('sticky-cart-total').textContent = fmt(cartTotal());
+      const drawerOpen = !document.getElementById('cart-drawer').classList.contains('translate-x-full');
+      stickyBar.classList.toggle('hidden', cart.length === 0 || drawerOpen);
+
+      lucide.createIcons();
+      highlightPayment();
+    }
+
+    function selectPayment(id){
+      selectedPayment = id;
+      highlightPayment();
+    }
+
+    function highlightPayment(){
+      document.querySelectorAll('.pay-btn').forEach(btn => {
+        const on = btn.dataset.payBtn === selectedPayment;
+        btn.style.background = on ? 'var(--ink)' : 'transparent';
+        btn.style.color = on ? '#fff' : '#374151';
+        btn.style.borderColor = on ? 'var(--ink)' : '#e5e7eb';
+      });
+    }
+
+    function toggleCart(){
+      const drawer = document.getElementById('cart-drawer');
+      const overlay = document.getElementById('cart-overlay');
+      const closed = drawer.classList.contains('translate-x-full');
+      drawer.classList.toggle('translate-x-full', !closed);
+      overlay.classList.toggle('hidden', !closed);
+      document.getElementById('sticky-cart-bar').classList.toggle('hidden', !closed || cart.length === 0);
+    }
+
+    function openCart(){
+      document.getElementById('cart-drawer').classList.remove('translate-x-full');
+      document.getElementById('cart-overlay').classList.remove('hidden');
+      document.getElementById('sticky-cart-bar').classList.add('hidden');
+    }
+
+    function checkoutWhatsApp(){
+      if (cart.length === 0) return;
+      const paymentLabel = paymentMethods.find(pm => pm.id === selectedPayment).label;
+      const lines = cart.map(c => `- ${c.qty}x ${c.name} (${c.variantName}) — Rp ${fmt(c.price * c.qty)}`).join('\n');
+      const msg = `Halo ZitByte, saya ingin memesan:\n\n${lines}\n\nTotal: Rp ${fmt(cartTotal())}\nMetode pembayaran: ${paymentLabel}\n\nMohon info instruksi pembayaran. Terima kasih!`;
+      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    filterCategory('semua');
+    renderCart();
     lucide.createIcons();
   </script>
  </body>
