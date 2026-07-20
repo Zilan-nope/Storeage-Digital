@@ -11,19 +11,17 @@
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --ink:#17171A;
-      --bg:#FAFAF9;
-      --accent:#6D4AFF;
-      --accent-dark:#4F31D6;
-    }
+    :root{ --ink:#17171A; --bg:#FAFAF9; --accent:#6D4AFF; --accent-dark:#4F31D6; }
     body{ font-family:'DM Sans', sans-serif; background:var(--bg); color:var(--ink); }
     .font-display{ font-family:'Fraunces', serif; }
     .font-mono{ font-family:'Space Mono', monospace; }
     .accent{ color: var(--accent); }
+    .bg-accent{ background: var(--accent); }
     .cat-chip{ font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.03em; }
     ::-webkit-scrollbar{ display:none; }
     .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+    .faq-icon{ transition: transform .2s; }
+    .faq-open .faq-icon{ transform: rotate(45deg); }
   </style>
  </head>
  <body class="min-h-screen text-gray-900 overflow-x-hidden">
@@ -52,79 +50,142 @@
         </button>
       </div>
       <div class="flex flex-col space-y-4 text-[15px] text-gray-700">
-        <a href="#" onclick="showTab('produk'); toggleSidebar(); return false;" id="nav-produk" class="font-bold text-black hover:opacity-60 transition">Produk</a>
-        <a href="#" onclick="showTab('about'); toggleSidebar(); return false;" id="nav-about" class="hover:opacity-60 transition">Tentang Kami</a>
-        <a href="#" class="hover:opacity-60 transition">Cara Pesan</a>
-        <a href="#" class="hover:opacity-60 transition">FAQ</a>
-        <a href="#" class="hover:opacity-60 transition">Hubungi Kami</a>
+        <a href="index.html" class="font-bold text-black hover:opacity-60 transition">Beranda</a>
+        <a href="katalog.html" class="hover:opacity-60 transition">Katalog Produk</a>
+        <a href="index.html#about" class="hover:opacity-60 transition">Tentang Kami</a>
+        <a href="index.html#faq" class="hover:opacity-60 transition">FAQ</a>
+        <a href="index.html#kontak" class="hover:opacity-60 transition">Hubungi Kami</a>
         <a href="#" class="hover:opacity-60 transition">Syarat & Ketentuan</a>
       </div>
     </div>
   </div>
 
-  <!-- Checkout overlay + drawer -->
-  <div id="checkout-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300" onclick="closeCheckout()"></div>
-  <div id="checkout-drawer" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
-    <div class="flex justify-between items-center p-5 border-b border-gray-200">
-      <h2 class="font-display font-bold text-lg">Invoice Pesanan</h2>
-      <button onclick="closeCheckout()" class="p-2 text-gray-500 hover:text-black hover:bg-gray-100 rounded-lg transition">
-        <i data-lucide="x" style="width:20px;height:20px"></i>
-      </button>
-    </div>
-    <div id="checkout-body" class="flex-1 overflow-y-auto p-5 space-y-5"></div>
-  </div>
-
   <!-- Main -->
-  <main class="max-w-3xl mx-auto bg-white min-h-screen pb-12 shadow-sm">
+  <main class="max-w-3xl mx-auto bg-white min-h-screen shadow-sm">
 
-   <div class="w-full relative h-48 sm:h-64 mb-6">
+   <!-- Hero -->
+   <div class="w-full relative h-56 sm:h-72">
      <img src="images/heros.svg" class="w-full h-full object-cover" loading="lazy" alt="Banner ZitByte">
-     <div class="absolute inset-0 bg-gradient-to-t from-black/65 to-transparent flex flex-col justify-end p-6">
+     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6">
        <p class="font-mono text-white/80 text-xs tracking-[0.2em] uppercase mb-1">ZitByte Studio</p>
-       <h2 class="font-display text-white text-2xl sm:text-3xl font-bold leading-tight">Produk digital,<br>siap pakai.</h2>
+       <h2 class="font-display text-white text-3xl sm:text-4xl font-bold leading-tight mb-4">Produk digital,<br>siap pakai.</h2>
+       <a href="katalog.html" class="inline-flex w-fit items-center gap-2 bg-white text-black font-bold text-sm px-5 py-3 rounded-lg hover:bg-gray-100 transition">
+         Lihat Katalog <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
+       </a>
      </div>
    </div>
 
-   <!-- Trust bar -->
-   <div class="px-6 mb-8">
-     <div class="flex flex-wrap gap-2 text-xs">
-       <span class="cat-chip flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full"><i data-lucide="zap" style="width:12px;height:12px"></i> Kirim instan</span>
-       <span class="cat-chip flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full"><i data-lucide="qr-code" style="width:12px;height:12px"></i> QRIS & e-wallet</span>
-       <span class="cat-chip flex items-center gap-1 bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full"><i data-lucide="shield-check" style="width:12px;height:12px"></i> Revisi ringan</span>
+   <!-- Trust cards -->
+   <div class="px-6 py-10 grid grid-cols-1 sm:grid-cols-3 gap-4">
+     <div class="border border-gray-100 rounded-xl p-4 bg-gray-50">
+       <i data-lucide="zap" class="accent mb-2" style="width:20px;height:20px"></i>
+       <p class="font-bold text-sm mb-1">Kirim Instan</p>
+       <p class="text-xs text-gray-500">File dikirim segera setelah pesanan dikonfirmasi.</p>
+     </div>
+     <div class="border border-gray-100 rounded-xl p-4 bg-gray-50">
+       <i data-lucide="qr-code" class="accent mb-2" style="width:20px;height:20px"></i>
+       <p class="font-bold text-sm mb-1">QRIS & E-wallet</p>
+       <p class="text-xs text-gray-500">Bayar pakai QRIS, GoPay, OVO, DANA, atau transfer bank.</p>
+     </div>
+     <div class="border border-gray-100 rounded-xl p-4 bg-gray-50">
+       <i data-lucide="shield-check" class="accent mb-2" style="width:20px;height:20px"></i>
+       <p class="font-bold text-sm mb-1">Revisi Ringan</p>
+       <p class="text-xs text-gray-500">Bantuan revisi kecil untuk kepuasan Anda.</p>
      </div>
    </div>
 
-   <div class="px-6">
-     <section id="section-produk">
-      <h2 class="font-display text-2xl font-bold text-gray-900 mb-4">Katalog Produk</h2>
-
-      <!-- Category chips -->
-      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-2 -mx-1 px-1">
-        <button onclick="filterCategory('semua')" data-cat-btn="semua" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Semua</button>
-        <button onclick="filterCategory('desain')" data-cat-btn="desain" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Desain</button>
-        <button onclick="filterCategory('template')" data-cat-btn="template" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Template</button>
-        <button onclick="filterCategory('ai')" data-cat-btn="ai" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">AI Tools</button>
-        <button onclick="filterCategory('karir')" data-cat-btn="karir" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Karir</button>
-      </div>
-
-      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-5"></div>
-     </section>
-
-     <section id="section-detail" class="hidden">
-      <button onclick="hideDetail()" class="flex items-center gap-2 text-gray-500 font-bold mb-6 hover:text-black transition">
-       <i data-lucide="arrow-left" style="width:20px;height:20px"></i> Kembali
-      </button>
-      <div id="detail-content"></div>
-     </section>
-
-     <section id="section-about" class="hidden">
-      <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">Tentang Kami</h2>
-      <img src="images/about.jpg" class="w-full h-64 object-cover rounded-xl mb-6 shadow-sm" loading="lazy" alt="Tentang ZitByte">
-      <p class="leading-relaxed text-gray-600 text-base">
-       ZitByte adalah studio digital yang menyediakan produk siap pakai untuk kebutuhan branding dan karir Anda: logo profesional, template Canva, koleksi prompt AI pilihan, hingga template CV & portofolio. Semua produk dikirim instan setelah pemesanan dikonfirmasi.
-      </p>
-     </section>
+   <!-- Category preview -->
+   <div class="px-6 pb-10">
+     <div class="flex items-center justify-between mb-4">
+       <h2 class="font-display text-2xl font-bold text-gray-900">Kategori</h2>
+       <a href="katalog.html" class="text-sm font-semibold accent hover:underline">Lihat semua</a>
+     </div>
+     <div class="grid grid-cols-2 gap-3">
+       <a href="katalog.html?cat=desain" class="border border-gray-100 rounded-xl p-4 hover:shadow-md transition">
+         <i data-lucide="palette" class="accent mb-2" style="width:22px;height:22px"></i>
+         <p class="font-bold text-sm">Desain</p>
+         <p class="text-xs text-gray-500 mt-0.5">Logo & identitas visual</p>
+       </a>
+       <a href="katalog.html?cat=template" class="border border-gray-100 rounded-xl p-4 hover:shadow-md transition">
+         <i data-lucide="layout-template" class="accent mb-2" style="width:22px;height:22px"></i>
+         <p class="font-bold text-sm">Template</p>
+         <p class="text-xs text-gray-500 mt-0.5">Template Canva siap edit</p>
+       </a>
+       <a href="katalog.html?cat=ai" class="border border-gray-100 rounded-xl p-4 hover:shadow-md transition">
+         <i data-lucide="sparkles" class="accent mb-2" style="width:22px;height:22px"></i>
+         <p class="font-bold text-sm">AI Tools</p>
+         <p class="text-xs text-gray-500 mt-0.5">Prompt AI pilihan</p>
+       </a>
+       <a href="katalog.html?cat=karir" class="border border-gray-100 rounded-xl p-4 hover:shadow-md transition">
+         <i data-lucide="briefcase" class="accent mb-2" style="width:22px;height:22px"></i>
+         <p class="font-bold text-sm">Karir</p>
+         <p class="text-xs text-gray-500 mt-0.5">CV & portofolio</p>
+       </a>
+     </div>
    </div>
+
+   <!-- Featured products -->
+   <div class="px-6 pb-10">
+     <div class="flex items-center justify-between mb-4">
+       <h2 class="font-display text-2xl font-bold text-gray-900">Produk Pilihan</h2>
+       <a href="katalog.html" class="text-sm font-semibold accent hover:underline">Lihat semua</a>
+     </div>
+     <div class="flex gap-4 overflow-x-auto no-scrollbar -mx-1 px-1 pb-2">
+       <a href="katalog.html?product=0" class="min-w-[160px] border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition">
+         <img src="images/logo-design.jpg" class="w-full h-28 object-cover" loading="lazy" alt="Logo Design">
+         <div class="p-3">
+           <p class="font-bold text-sm">Logo Design</p>
+           <p class="font-mono accent text-xs font-bold mt-1">Rp 150.000</p>
+         </div>
+       </a>
+       <a href="katalog.html?product=1" class="min-w-[160px] border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition">
+         <img src="images/canva-template.jpg" class="w-full h-28 object-cover" loading="lazy" alt="Canva Post Template">
+         <div class="p-3">
+           <p class="font-bold text-sm">Canva Template</p>
+           <p class="font-mono accent text-xs font-bold mt-1">Rp 75.000</p>
+         </div>
+       </a>
+       <a href="katalog.html?product=2" class="min-w-[160px] border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition">
+         <img src="images/ai-prompt.jpg" class="w-full h-28 object-cover" loading="lazy" alt="AI Prompt Pack">
+         <div class="p-3">
+           <p class="font-bold text-sm">AI Prompt Pack</p>
+           <p class="font-mono accent text-xs font-bold mt-1">Rp 50.000</p>
+         </div>
+       </a>
+       <a href="katalog.html?product=3" class="min-w-[160px] border border-gray-100 rounded-xl overflow-hidden hover:shadow-md transition">
+         <img src="images/cv-portfolio.jpg" class="w-full h-28 object-cover" loading="lazy" alt="CV & Portfolio">
+         <div class="p-3">
+           <p class="font-bold text-sm">CV & Portfolio</p>
+           <p class="font-mono accent text-xs font-bold mt-1">Rp 100.000</p>
+         </div>
+       </a>
+     </div>
+   </div>
+
+   <!-- About -->
+   <section id="about" class="px-6 py-12 border-t border-gray-100 scroll-mt-16">
+     <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">Tentang Kami</h2>
+     <img src="images/about.jpg" class="w-full h-64 object-cover rounded-xl mb-6 shadow-sm" loading="lazy" alt="Tentang ZitByte">
+     <p class="leading-relaxed text-gray-600 text-base">
+      ZitByte adalah studio digital yang menyediakan produk siap pakai untuk kebutuhan branding dan karir Anda: logo profesional, template Canva, koleksi prompt AI pilihan, hingga template CV & portofolio. Semua produk dikirim instan setelah pemesanan dikonfirmasi.
+     </p>
+   </section>
+
+   <!-- FAQ -->
+   <section id="faq" class="px-6 py-12 border-t border-gray-100 scroll-mt-16">
+     <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">FAQ</h2>
+     <div id="faq-list" class="space-y-2"></div>
+   </section>
+
+   <!-- Contact -->
+   <section id="kontak" class="px-6 py-12 border-t border-gray-100 scroll-mt-16">
+     <h2 class="font-display text-2xl font-bold text-gray-900 mb-6">Hubungi Kami</h2>
+     <p class="text-gray-600 mb-6">Ada pertanyaan sebelum memesan? Chat langsung, kami balas secepatnya.</p>
+     <a href="https://wa.me/6282142645156?text=Halo%20ZitByte%2C%20saya%20ingin%20bertanya" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-black text-white font-bold px-5 py-3 rounded-lg hover:bg-gray-800 transition">
+       <i data-lucide="message-circle" style="width:18px;height:18px"></i> Chat via WhatsApp
+     </a>
+   </section>
+
   </main>
 
   <!-- Footer -->
@@ -132,7 +193,7 @@
    <div class="max-w-3xl mx-auto px-6">
     <p class="text-center font-mono mb-6 text-gray-400 uppercase tracking-widest text-xs">Ikuti Kami</p>
     <div class="flex justify-center gap-4 flex-wrap">
-     <a href="https://www.instagram.com/zitbyte/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-black transition"><i data-lucide="instagram" style="width:18px;height:18px"></i> Instagram</a>
+     <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-black transition"><i data-lucide="instagram" style="width:18px;height:18px"></i> Instagram</a>
      <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-black transition">
       <svg width="18" height="18" viewbox="0 0 24 24" fill="currentColor">
        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.37a8.16 8.16 0 004.76 1.52v-3.4a4.85 4.85 0 01-1-.8z" />
@@ -144,83 +205,6 @@
   </footer>
 
   <script>
-    const WA_NUMBER = '6282142645156';
-
-    const products = [
-      { name:'Logo Design', category:'desain', price:'Rp 150.000', img:'images/logo-design.svg',
-        variants:[
-          { name:'Logo Minimalis', price:150000 },
-          { name:'Logo Mascot', price:250000 },
-          { name:'Logo Wordmark', price:120000 },
-          { name:'Logo + Brand Kit', price:350000 }
-        ]},
-      { name:'Canva Post Template', category:'template', price:'Rp 75.000', img:'images/canva-template.svg',
-        variants:[
-          { name:'Feed Post (10 desain)', price:75000 },
-          { name:'Story Template (10 desain)', price:60000 },
-          { name:'Carousel Template (5 set)', price:85000 },
-          { name:'Bundle All Template', price:180000 }
-        ]},
-      { name:'AI Prompt / APK Pack', category:'ai', price:'Rp 50.000', img:'images/ai-prompt.svg',
-        variants:[
-          { name:'ChatGPT Prompt Pack', price:50000 },
-          { name:'APK Prompt Pack', price:75000 },
-          { name:'NGOPILIATE tools', price:85000 },
-          { name:'Bundle All AI Prompts', price:150000 }
-        ]},
-      { name:'CV & Portfolio Template', category:'karir', price:'Rp 100.000', img:'images/cv-portfolio.svg',
-        variants:[
-          { name:'CV Modern (Canva)', price:50000 },
-          { name:'CV ATS-Friendly', price:60000 },
-          { name:'Portfolio Digital', price:80000 },
-          { name:'Bundle CV + Portfolio', price:100000 }
-        ]}
-    ];
-
-    const categoryLabels = { desain:'Desain', template:'Template', ai:'AI Tools', karir:'Karir' };
-    const paymentMethods = [
-      { id:'qris', label:'QRIS' },
-      { id:'gopay', label:'GoPay' },
-      { id:'ovo_dana', label:'OVO / DANA' },
-      { id:'transfer', label:'Transfer Bank' }
-    ];
-
-    let activeCategory = 'semua';
-    let checkoutState = null; // { productIdx, variantIdx, qty, payment }
-
-    function fmt(n){ return n.toLocaleString('id-ID'); }
-
-    function renderProductGrid(){
-      const grid = document.getElementById('product-grid');
-      grid.innerHTML = products
-        .filter(p => activeCategory === 'semua' || p.category === activeCategory)
-        .map(p => {
-          const idx = products.indexOf(p);
-          return `
-          <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(${idx})">
-            <div class="relative">
-              <img src="${p.img}" class="w-full h-48 object-cover" loading="lazy" alt="${p.name}">
-              <span class="cat-chip absolute top-3 left-3 bg-white/90 text-gray-800 px-2.5 py-1 rounded-full">${categoryLabels[p.category]}</span>
-            </div>
-            <div class="p-4">
-             <h3 class="font-bold text-gray-900 text-lg">${p.name}</h3>
-             <p class="font-mono accent font-bold mt-1">${p.price}</p>
-            </div>
-          </div>`;
-        }).join('');
-    }
-
-    function filterCategory(cat){
-      activeCategory = cat;
-      document.querySelectorAll('.cat-filter-btn').forEach(btn => {
-        const on = btn.dataset.catBtn === cat;
-        btn.style.background = on ? 'var(--ink)' : 'transparent';
-        btn.style.color = on ? '#fff' : '#374151';
-        btn.style.borderColor = on ? 'var(--ink)' : '#e5e7eb';
-      });
-      renderProductGrid();
-    }
-
     function toggleSidebar(){
       const sidebar = document.getElementById('sidebar');
       const overlay = document.getElementById('sidebar-overlay');
@@ -229,140 +213,37 @@
       overlay.classList.toggle('hidden', !closed);
     }
 
-    function showTab(tab){
-      document.getElementById('section-produk').classList.toggle('hidden', tab !== 'produk');
-      document.getElementById('section-about').classList.toggle('hidden', tab !== 'about');
-      document.getElementById('section-detail').classList.add('hidden');
-      document.getElementById('nav-produk').classList.toggle('font-bold', tab === 'produk');
-      document.getElementById('nav-produk').classList.toggle('text-black', tab === 'produk');
-      document.getElementById('nav-about').classList.toggle('font-bold', tab === 'about');
-      document.getElementById('nav-about').classList.toggle('text-black', tab === 'about');
-    }
+    const faqs = [
+      { q:'Bagaimana cara memesan?', a:'Pilih produk dan varian di halaman Katalog, tentukan jumlah dan metode pembayaran, lalu tekan "Kirim Invoice via WhatsApp". Rincian pesanan otomatis terkirim ke WhatsApp kami.' },
+      { q:'Metode pembayaran apa saja yang tersedia?', a:'QRIS, GoPay, OVO, DANA, dan transfer bank. Instruksi pembayaran dikirim setelah kami menerima invoice Anda via WhatsApp.' },
+      { q:'Berapa lama proses pengerjaan?', a:'Produk template & digital siap pakai dikirim instan setelah pembayaran dikonfirmasi. Untuk produk custom seperti logo, estimasi 1-3 hari kerja tergantung antrean.' },
+      { q:'Apakah bisa request revisi?', a:'Bisa, setiap produk custom mendapat kesempatan revisi ringan. Untuk revisi besar di luar cakupan awal, mungkin ada biaya tambahan yang akan diinfokan lebih dulu.' },
+      { q:'Dalam format apa file dikirim?', a:'Tergantung produk — umumnya PNG/JPG/PDF untuk desain, file Canva (link) untuk template, dan teks/PDF untuk prompt pack. Detail format tersedia di deskripsi tiap produk.' }
+    ];
 
-    function showDetail(idx){
-      const p = products[idx];
-      const container = document.getElementById('detail-content');
-      container.innerHTML = `
-        <span class="cat-chip inline-block bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full mb-3">${categoryLabels[p.category]}</span>
-        <h2 class="font-bold text-2xl text-gray-900 mb-2" style="font-family:'Fraunces',serif">${p.name}</h2>
-        <p class="font-mono accent font-bold mb-6">Mulai dari ${p.price}</p>
-        <h3 class="font-bold text-gray-700 mb-3">Pilih Jenis:</h3>
-        <div class="space-y-3">
-          ${p.variants.map((v, vi) => `
-            <div class="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm border border-gray-100">
-              <div>
-                <p class="font-semibold text-gray-900">${v.name}</p>
-                <p class="font-mono text-gray-500 text-sm mt-0.5">Rp ${fmt(v.price)}</p>
-              </div>
-              <button onclick="startCheckout(${idx}, ${vi})" class="px-5 py-2.5 bg-black text-white rounded-lg font-bold text-sm hover:bg-gray-800 transition">
-                Beli
-              </button>
-            </div>
-          `).join('')}
+    function renderFaq(){
+      const list = document.getElementById('faq-list');
+      list.innerHTML = faqs.map((f, i) => `
+        <div class="border border-gray-100 rounded-xl overflow-hidden" id="faq-item-${i}">
+          <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between text-left px-4 py-4 hover:bg-gray-50 transition">
+            <span class="font-semibold text-sm text-gray-900 pr-4">${f.q}</span>
+            <i data-lucide="plus" class="faq-icon text-gray-400 flex-shrink-0" style="width:18px;height:18px"></i>
+          </button>
+          <div class="faq-answer hidden px-4 pb-4 text-sm text-gray-600 leading-relaxed">${f.a}</div>
         </div>
-      `;
-      document.getElementById('section-produk').classList.add('hidden');
-      document.getElementById('section-detail').classList.remove('hidden');
+      `).join('');
       lucide.createIcons();
     }
 
-    function hideDetail(){
-      document.getElementById('section-detail').classList.add('hidden');
-      document.getElementById('section-produk').classList.remove('hidden');
+    function toggleFaq(i){
+      const item = document.getElementById('faq-item-' + i);
+      const answer = item.querySelector('.faq-answer');
+      const isOpen = item.classList.contains('faq-open');
+      item.classList.toggle('faq-open', !isOpen);
+      answer.classList.toggle('hidden', isOpen);
     }
 
-    function startCheckout(productIdx, variantIdx){
-      checkoutState = { productIdx, variantIdx, qty:1, payment:'qris' };
-      renderCheckout();
-      openCheckout();
-    }
-
-    function changeQty(delta){
-      checkoutState.qty = Math.max(1, checkoutState.qty + delta);
-      renderCheckout();
-    }
-
-    function selectPayment(id){
-      checkoutState.payment = id;
-      renderCheckout();
-    }
-
-    function renderCheckout(){
-      const p = products[checkoutState.productIdx];
-      const v = p.variants[checkoutState.variantIdx];
-      const total = v.price * checkoutState.qty;
-      const body = document.getElementById('checkout-body');
-
-      body.innerHTML = `
-        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50">
-          <p class="text-xs cat-chip text-gray-400 mb-1">${categoryLabels[p.category]}</p>
-          <p class="font-semibold text-gray-900">${p.name}</p>
-          <p class="text-sm text-gray-500">${v.name}</p>
-          <p class="font-mono text-sm text-gray-700 mt-1">Rp ${fmt(v.price)} / item</p>
-        </div>
-
-        <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-500">Jumlah</span>
-          <div class="flex items-center gap-3">
-            <button onclick="changeQty(-1)" class="w-8 h-8 flex items-center justify-center border border-gray-200 rounded-lg text-gray-600">-</button>
-            <span class="font-mono text-base w-4 text-center">${checkoutState.qty}</span>
-            <button onclick="changeQty(1)" class="w-8 h-8 flex items-center justify-center border border-gray-200 rounded-lg text-gray-600">+</button>
-          </div>
-        </div>
-
-        <div>
-          <p class="text-xs font-mono uppercase tracking-wide text-gray-400 mb-2">Metode Pembayaran</p>
-          <div class="grid grid-cols-2 gap-2">
-            ${paymentMethods.map(pm => `
-              <button onclick="selectPayment('${pm.id}')" data-pay-btn="${pm.id}" class="pay-btn cat-chip px-3 py-2 rounded-lg border-2 transition text-center">${pm.label}</button>
-            `).join('')}
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between pt-2 border-t border-gray-100">
-          <span class="text-sm text-gray-500">Total</span>
-          <span class="font-mono font-bold text-lg">Rp ${fmt(total)}</span>
-        </div>
-
-        <button onclick="sendInvoice()" class="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition flex items-center justify-center gap-2">
-          <i data-lucide="message-circle" style="width:18px;height:18px"></i> Kirim Invoice via WhatsApp
-        </button>
-        <p class="text-xs text-gray-400 text-center">Invoice berisi rincian pesanan & metode pembayaran akan terkirim ke WhatsApp kami. Instruksi pembayaran dibalas dari sana.</p>
-      `;
-
-      lucide.createIcons();
-      document.querySelectorAll('.pay-btn').forEach(btn => {
-        const on = btn.dataset.payBtn === checkoutState.payment;
-        btn.style.background = on ? 'var(--ink)' : 'transparent';
-        btn.style.color = on ? '#fff' : '#374151';
-        btn.style.borderColor = on ? 'var(--ink)' : '#e5e7eb';
-      });
-    }
-
-    function openCheckout(){
-      document.getElementById('checkout-drawer').classList.remove('translate-x-full');
-      document.getElementById('checkout-overlay').classList.remove('hidden');
-    }
-
-    function closeCheckout(){
-      document.getElementById('checkout-drawer').classList.add('translate-x-full');
-      document.getElementById('checkout-overlay').classList.add('hidden');
-    }
-
-    function sendInvoice(){
-      const p = products[checkoutState.productIdx];
-      const v = p.variants[checkoutState.variantIdx];
-      const qty = checkoutState.qty;
-      const total = v.price * qty;
-      const paymentLabel = paymentMethods.find(pm => pm.id === checkoutState.payment).label;
-      const invoiceNo = 'INV-' + Date.now().toString().slice(-8);
-
-      const msg = `*INVOICE ZitByte*\nNo: ${invoiceNo}\n\nProduk: ${p.name} (${v.name})\nJumlah: ${qty}\nHarga satuan: Rp ${fmt(v.price)}\nTotal: Rp ${fmt(total)}\nMetode pembayaran: ${paymentLabel}\n\nMohon konfirmasi & kirim instruksi pembayaran. Terima kasih!`;
-
-      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
-    }
-
-    filterCategory('semua');
+    renderFaq();
     lucide.createIcons();
   </script>
  </body>

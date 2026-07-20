@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="id">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Katalog Produk — ZitByte</title>
+
+  <link rel="icon" type="image/svg+xml" href="images/tab%20logo%20website.svg">
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{ --ink:#17171A; --bg:#FAFAF9; --accent:#6D4AFF; --accent-dark:#4F31D6; }
+    body{ font-family:'DM Sans', sans-serif; background:var(--bg); color:var(--ink); }
+    .font-display{ font-family:'Fraunces', serif; }
+    .font-mono{ font-family:'Space Mono', monospace; }
+    .accent{ color: var(--accent); }
+    .cat-chip{ font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.03em; }
+    ::-webkit-scrollbar{ display:none; }
+    .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+  </style>
+ </head>
+ <body class="min-h-screen text-gray-900 overflow-x-hidden">
+
+  <!-- Navbar -->
+  <header class="bg-white/95 backdrop-blur border-b border-gray-200 sticky top-0 z-40">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="images/imagesweb_20logo.svg" alt="ZitByte logo" class="w-9 h-9 object-contain rounded bg-gray-100 p-1 border border-gray-200">
+        <h1 class="font-display font-bold text-xl tracking-tight">ZitByte</h1>
+      </a>
+      <button onclick="toggleSidebar()" class="p-2 text-gray-800 hover:bg-gray-100 rounded-lg transition">
+        <i data-lucide="menu" style="width:22px;height:22px"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Menu overlay + sidebar -->
+  <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300" onclick="toggleSidebar()"></div>
+  <div id="sidebar" class="fixed top-0 right-0 h-full w-64 bg-[#F2F2F2] z-50 transform translate-x-full transition-transform duration-300 shadow-2xl">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-8 border-b border-gray-300 pb-4">
+        <h2 class="font-mono tracking-[0.15em] text-xs text-gray-800 uppercase">Menu</h2>
+        <button onclick="toggleSidebar()" class="p-2 text-gray-500 hover:text-black hover:bg-gray-200 rounded-lg transition">
+          <i data-lucide="x" style="width:20px;height:20px"></i>
+        </button>
+      </div>
+      <div class="flex flex-col space-y-4 text-[15px] text-gray-700">
+        <a href="index.html" class="hover:opacity-60 transition">Beranda</a>
+        <a href="katalog.html" class="font-bold text-black hover:opacity-60 transition">Katalog Produk</a>
+        <a href="index.html#about" class="hover:opacity-60 transition">Tentang Kami</a>
+        <a href="index.html#faq" class="hover:opacity-60 transition">FAQ</a>
+        <a href="index.html#kontak" class="hover:opacity-60 transition">Hubungi Kami</a>
+        <a href="#" class="hover:opacity-60 transition">Syarat & Ketentuan</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout overlay + drawer -->
+  <div id="checkout-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300" onclick="closeCheckout()"></div>
+  <div id="checkout-drawer" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white z-50 transform translate-x-full transition-transform duration-300 shadow-2xl flex flex-col">
+    <div class="flex justify-between items-center p-5 border-b border-gray-200">
+      <h2 class="font-display font-bold text-lg">Invoice Pesanan</h2>
+      <button onclick="closeCheckout()" class="p-2 text-gray-500 hover:text-black hover:bg-gray-100 rounded-lg transition">
+        <i data-lucide="x" style="width:20px;height:20px"></i>
+      </button>
+    </div>
+    <div id="checkout-body" class="flex-1 overflow-y-auto p-5 space-y-5"></div>
+  </div>
+
+  <!-- Main -->
+  <main class="max-w-3xl mx-auto bg-white min-h-screen pb-12 shadow-sm">
+
+   <div class="px-6 pt-6">
+     <a href="index.html" class="flex items-center gap-2 text-gray-500 font-bold mb-6 hover:text-black transition text-sm">
+       <i data-lucide="arrow-left" style="width:18px;height:18px"></i> Beranda
+     </a>
+
+     <section id="section-produk">
+      <h2 class="font-display text-2xl font-bold text-gray-900 mb-4">Katalog Produk</h2>
+
+      <div class="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-2 -mx-1 px-1">
+        <button onclick="filterCategory('semua')" data-cat-btn="semua" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Semua</button>
+        <button onclick="filterCategory('desain')" data-cat-btn="desain" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Desain</button>
+        <button onclick="filterCategory('template')" data-cat-btn="template" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Template</button>
+        <button onclick="filterCategory('ai')" data-cat-btn="ai" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">AI Tools</button>
+        <button onclick="filterCategory('karir')" data-cat-btn="karir" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Karir</button>
+      </div>
+
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-5"></div>
+     </section>
+
+     <section id="section-detail" class="hidden">
+      <button onclick="hideDetail()" class="flex items-center gap-2 text-gray-500 font-bold mb-6 hover:text-black transition">
+       <i data-lucide="arrow-left" style="width:20px;height:20px"></i> Kembali
+      </button>
+      <div id="detail-content"></div>
+     </section>
+   </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-200 py-10 bg-white">
+   <div class="max-w-3xl mx-auto px-6">
+    <p class="text-center font-mono mb-2 text-gray-400 uppercase tracking-widest text-xs">Butuh bantuan?</p>
+    <p class="text-center text-sm text-gray-500 mb-4">Lihat <a href="index.html#faq" class="accent font-semibold hover:underline">FAQ</a> atau <a href="index.html#kontak" class="accent font-semibold hover:underline">hubungi kami</a> langsung.</p>
+   </div>
+  </footer>
+
+  <script>
+    const WA_NUMBER = '6282142645156';
+
+    const products = [
+      { name:'Logo Design', category:'desain', price:'Rp 150.000', img:'images/logo-design.jpg',
+        variants:[
+          { name:'Logo Minimalis', price:150000 },
+          { name:'Logo Mascot', price:250000 },
+          { name:'Logo Wordmark', price:120000 },
+          { name:'Logo + Brand Kit', price:350000 }
+        ]},
+      { name:'Canva Post Template', category:'template', price:'Rp 75.000', img:'images/canva-template.jpg',
+        variants:[
+          { name:'Feed Post (10 desain)', price:75000 },
+          { name:'Story Template (10 desain)', price:60000 },
+          { name:'Carousel Template (5 set)', price:85000 },
+          { name:'Bundle All Template', price:180000 }
+        ]},
+      { name:'AI Prompt / APK Pack', category:'ai', price:'Rp 50.000', img:'images/ai-prompt.jpg',
+        variants:[
+          { name:'ChatGPT Prompt Pack', price:50000 },
+          { name:'APK Prompt Pack', price:75000 },
+          { name:'NGOPILIATE tools', price:85000 },
+          { name:'Bundle All AI Prompts', price:150000 }
+        ]},
+      { name:'CV & Portfolio Template', category:'karir', price:'Rp 100.000', img:'images/cv-portfolio.jpg',
+        variants:[
+          { name:'CV Modern (Canva)', price:50000 },
+          { name:'CV ATS-Friendly', price:60000 },
+          { name:'Portfolio Digital', price:80000 },
+          { name:'Bundle CV + Portfolio', price:100000 }
+        ]}
+    ];
+
+    const categoryLabels = { desain:'Desain', template:'Template', ai:'AI Tools', karir:'Karir' };
+    const paymentMethods = [
+      { id:'qris', label:'QRIS' },
+      { id:'gopay', label:'GoPay' },
+      { id:'ovo_dana', label:'OVO / DANA' },
+      { id:'transfer', label:'Transfer Bank' }
+    ];
+
+    let activeCategory = 'semua';
+    let checkoutState = null;
+
+    function fmt(n){ return n.toLocaleString('id-ID'); }
+
+    function renderProductGrid(){
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = products
+        .filter(p => activeCategory === 'semua' || p.category === activeCategory)
+        .map(p => {
+          const idx = products.indexOf(p);
+          return `
+          <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 cursor-pointer hover:shadow-xl transition" onclick="showDetail(${idx})">
+            <div class="relative">
+              <img src="${p.img}" class="w-full h-48 object-cover" loading="lazy" alt="${p.name}">
+              <span class="cat-chip absolute top-3 left-3 bg-white/90 text-gray-800 px-2.5 py-1 rounded-full">${categoryLabels[p.category]}</span>
+            </div>
+            <div class="p-4">
+             <h3 class="font-bold text-gray-900 text-lg">${p.name}</h3>
+             <p class="font-mono accent font-bold mt-1">${p.price}</p>
+            </div>
+          </div>`;
+        }).join('');
+    }
+
+    function filterCategory(cat){
+      activeCategory = cat;
+      document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+        const on = btn.dataset.catBtn === cat;
+        btn.style.background = on ? 'var(--ink)' : 'transparent';
+        btn.style.color = on ? '#fff' : '#374151';
+        btn.style.borderColor = on ? 'var(--ink)' : '#e5e7eb';
+      });
+      renderProductGrid();
+    }
+
+    function toggleSidebar(){
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      const closed = sidebar.classList.contains('translate-x-full');
+      sidebar.classList.toggle('translate-x-full', !closed);
+      overlay.classList.toggle('hidden', !closed);
+    }
+
+    function showDetail(idx){
+      const p = products[idx];
+      const container = document.getElementById('detail-content');
+      container.innerHTML = `
+        <span class="cat-chip inline-block bg-gray-100 text-gray-700 px-2.5 py-1 rounded-full mb-3">${categoryLabels[p.category]}</span>
+        <h2 class="font-bold text-2xl text-gray-900 mb-2" style="font-family:'Fraunces',serif">${p.name}</h2>
+        <p class="font-mono accent font-bold mb-6">Mulai dari ${p.price}</p>
+        <h3 class="font-bold text-gray-700 mb-3">Pilih Jenis:</h3>
+        <div class="space-y-3">
+          ${p.variants.map((v, vi) => `
+            <div class="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm border border-gray-100">
+              <div>
+                <p class="font-semibold text-gray-900">${v.name}</p>
+                <p class="font-mono text-gray-500 text-sm mt-0.5">Rp ${fmt(v.price)}</p>
+              </div>
+              <button onclick="startCheckout(${idx}, ${vi})" class="px-5 py-2.5 bg-black text-white rounded-lg font-bold text-sm hover:bg-gray-800 transition">
+                Beli
+              </button>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      document.getElementById('section-produk').classList.add('hidden');
+      document.getElementById('section-detail').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function hideDetail(){
+      document.getElementById('section-detail').classList.add('hidden');
+      document.getElementById('section-produk').classList.remove('hidden');
+    }
+
+    function startCheckout(productIdx, variantIdx){
+      checkoutState = { productIdx, variantIdx, qty:1, payment:'qris' };
+      renderCheckout();
+      openCheckout();
+    }
+
+    function changeQty(delta){
+      checkoutState.qty = Math.max(1, checkoutState.qty + delta);
+      renderCheckout();
+    }
+
+    function selectPayment(id){
+      checkoutState.payment = id;
+      renderCheckout();
+    }
+
+    function renderCheckout(){
+      const p = products[checkoutState.productIdx];
+      const v = p.variants[checkoutState.variantIdx];
+      const total = v.price * checkoutState.qty;
+      const body = document.getElementById('checkout-body');
+
+      body.innerHTML = `
+        <div class="border border-gray-100 rounded-xl p-4 bg-gray-50">
+          <p class="text-xs cat-chip text-gray-400 mb-1">${categoryLabels[p.category]}</p>
+          <p class="font-semibold text-gray-900">${p.name}</p>
+          <p class="text-sm text-gray-500">${v.name}</p>
+          <p class="font-mono text-sm text-gray-700 mt-1">Rp ${fmt(v.price)} / item</p>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-500">Jumlah</span>
+          <div class="flex items-center gap-3">
+            <button onclick="changeQty(-1)" class="w-8 h-8 flex items-center justify-center border border-gray-200 rounded-lg text-gray-600">-</button>
+            <span class="font-mono text-base w-4 text-center">${checkoutState.qty}</span>
+            <button onclick="changeQty(1)" class="w-8 h-8 flex items-center justify-center border border-gray-200 rounded-lg text-gray-600">+</button>
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs font-mono uppercase tracking-wide text-gray-400 mb-2">Metode Pembayaran</p>
+          <div class="grid grid-cols-2 gap-2">
+            ${paymentMethods.map(pm => `
+              <button onclick="selectPayment('${pm.id}')" data-pay-btn="${pm.id}" class="pay-btn cat-chip px-3 py-2 rounded-lg border-2 transition text-center">${pm.label}</button>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+          <span class="text-sm text-gray-500">Total</span>
+          <span class="font-mono font-bold text-lg">Rp ${fmt(total)}</span>
+        </div>
+
+        <button onclick="sendInvoice()" class="w-full bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition flex items-center justify-center gap-2">
+          <i data-lucide="message-circle" style="width:18px;height:18px"></i> Kirim Invoice via WhatsApp
+        </button>
+        <p class="text-xs text-gray-400 text-center">Invoice berisi rincian pesanan & metode pembayaran akan terkirim ke WhatsApp kami. Instruksi pembayaran dibalas dari sana.</p>
+      `;
+
+      lucide.createIcons();
+      document.querySelectorAll('.pay-btn').forEach(btn => {
+        const on = btn.dataset.payBtn === checkoutState.payment;
+        btn.style.background = on ? 'var(--ink)' : 'transparent';
+        btn.style.color = on ? '#fff' : '#374151';
+        btn.style.borderColor = on ? 'var(--ink)' : '#e5e7eb';
+      });
+    }
+
+    function openCheckout(){
+      document.getElementById('checkout-drawer').classList.remove('translate-x-full');
+      document.getElementById('checkout-overlay').classList.remove('hidden');
+    }
+
+    function closeCheckout(){
+      document.getElementById('checkout-drawer').classList.add('translate-x-full');
+      document.getElementById('checkout-overlay').classList.add('hidden');
+    }
+
+    function sendInvoice(){
+      const p = products[checkoutState.productIdx];
+      const v = p.variants[checkoutState.variantIdx];
+      const qty = checkoutState.qty;
+      const total = v.price * qty;
+      const paymentLabel = paymentMethods.find(pm => pm.id === checkoutState.payment).label;
+      const invoiceNo = 'INV-' + Date.now().toString().slice(-8);
+
+      const msg = `*INVOICE ZitByte*\nNo: ${invoiceNo}\n\nProduk: ${p.name} (${v.name})\nJumlah: ${qty}\nHarga satuan: Rp ${fmt(v.price)}\nTotal: Rp ${fmt(total)}\nMetode pembayaran: ${paymentLabel}\n\nMohon konfirmasi & kirim instruksi pembayaran. Terima kasih!`;
+
+      window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // Init: read URL params for direct category or product deep-links
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialCat = urlParams.get('cat');
+    const initialProduct = urlParams.get('product');
+
+    filterCategory(initialCat && categoryLabels[initialCat] ? initialCat : 'semua');
+    lucide.createIcons();
+
+    if (initialProduct !== null && products[parseInt(initialProduct)]) {
+      showDetail(parseInt(initialProduct));
+    }
+  </script>
+ </body>
+</html>
