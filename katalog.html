@@ -69,6 +69,16 @@
     <div id="checkout-body" class="flex-1 overflow-y-auto p-5 space-y-5"></div>
   </div>
 
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-4 mb-2 -mx-1 px-1">
+        <button onclick="filterCategory('semua')" data-cat-btn="semua" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Semua</button>
+        <button onclick="filterCategory('desain')" data-cat-btn="desain" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Desain</button>
+        <button onclick="filterCategory('template')" data-cat-btn="template" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Template</button>
+        <button onclick="filterCategory('ai')" data-cat-btn="ai" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">AI Tools</button>
+        <button onclick="filterCategory('karir')" data-cat-btn="karir" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Karir</button>
+        <!-- 🚀 SELIPKAN INI DI KATALOG.HTML -->
+        <button onclick="filterCategory('web')" data-cat-btn="web" class="cat-filter-btn cat-chip whitespace-nowrap px-4 py-2 rounded-full border-2 transition">Web Design</button>
+      </div>
+
   <!-- Main -->
   <main class="max-w-3xl mx-auto bg-white min-h-screen pb-12 shadow-sm">
 
@@ -140,9 +150,16 @@
           { name:'Portfolio Digital', price:80000 },
           { name:'Bundle CV + Portfolio', price:100000 }
         ]}
+      { name:'Web Design & Development', category:'web', price:'Rp 120.000', img:'images/web-design.svg',
+        variants:[
+          { name:'Bio Link / Digital Card (Framer/Canva)', price:120000 },
+          { name:'Landing Page Bisnis & Jualan (1 Halaman)', price:550000 },
+          { name:'Web Portofolio Kreatif (Personal Brand)', price:550000 },
+          { name:'Company Profile UMKM (Premium)', price:850000 }
+        ]}
     ];
 
-    const categoryLabels = { desain:'Desain', template:'Template', ai:'AI Tools', karir:'Karir' };
+    const categoryLabels = { desain:'Desain', template:'Template', ai:'AI Tools', karir:'Karir'web:'Web Design' };
     const paymentMethods = [
       { id:'qris', label:'QRIS' },
       { id:'gopay', label:'GoPay' },
